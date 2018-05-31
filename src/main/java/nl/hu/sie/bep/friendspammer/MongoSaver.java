@@ -1,12 +1,15 @@
 package nl.hu.sie.bep.friendspammer;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoCredential;
 import com.mongodb.MongoException;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
@@ -14,10 +17,16 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoSaver {
 	private static Logger logger = Logger.getLogger(EmailSender.class.getName());
+	private static Properties prop = new Properties();
+	InputStream input = null;
 
-	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html, String userName, String password) {
+	private MongoSaver() throws FileNotFoundException {
+		input = new FileInputStream("config.properties");
+	}
 
-		MongoConnection mongoConnection = new MongoConnection(userName, password);
+	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html) {
+
+		MongoConnection mongoConnection = new MongoConnection(prop.getProperty("username"), prop.getProperty("password"));
 
 		boolean success = true;
 

@@ -1,5 +1,8 @@
 package nl.hu.sie.bep.friendspammer;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -13,11 +16,14 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailSender {
     private static Logger logger = Logger.getLogger(EmailSender.class.getName());
+    private static Properties prop = new Properties();
+    InputStream input = null;
 
-    private EmailSender() {
+    private EmailSender() throws FileNotFoundException {
+        input = new FileInputStream("config.properties");
     }
 
-    public static void sendEmail(String subject, String to, String messageBody, boolean asHtml, String username, String password) throws MessagingException {
+    public static void sendEmail(String subject, String to, String messageBody, boolean asHtml) throws MessagingException {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.mailtrap.io");
@@ -28,7 +34,7 @@ public class EmailSender {
                 new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(prop.getProperty("mailtrapUsername"), prop.getProperty("mailtrapPassword"));
                     }
                 });
         try {
@@ -46,7 +52,7 @@ public class EmailSender {
             }
             Transport.send(message);
 
-            MongoSaver.saveEmail(to, "spammer@spamer.com", subject, messageBody, asHtml, username, password);
+            MongoSaver.saveEmail(to, "spammer@spamer.com", subject, messageBody, asHtml);
 
 
         } catch (MessagingException e) {
@@ -54,7 +60,7 @@ public class EmailSender {
         }
     }
 
-    public static void sendEmail(String subject, String[] toList, String messageBody, boolean asHtml, String username, String password) throws MessagingException {
+    public static void sendEmail(String subject, String[] toList, String messageBody, boolean asHtml) throws MessagingException {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.mailtrap.io");
@@ -65,7 +71,7 @@ public class EmailSender {
                 new javax.mail.Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
+                        return new PasswordAuthentication(prop.getProperty("mailtrapUsername"), prop.getProperty("mailtrapPassword"));
                     }
                 });
         try {
