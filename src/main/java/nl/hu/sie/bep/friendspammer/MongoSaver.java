@@ -26,7 +26,7 @@ public class MongoSaver {
 
 	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html) {
 
-		MongoConnection mongoConnection = new MongoConnection(prop.getProperty("username"), prop.getProperty("password"));
+		MongoConnection mongoConnection = new MongoConnection(prop.getProperty("mongoUserName"), prop.getProperty("mongoPassword"));
 
 		boolean success = true;
 
