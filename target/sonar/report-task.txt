@@ -2,5 +2,5 @@ projectKey=nl.hu.bep.friendspammer:friendspammer-helper
 serverUrl=http://localhost:9000
 serverVersion=7.1.0.11001
 dashboardUrl=http://localhost:9000/dashboard/index/nl.hu.bep.friendspammer:friendspammer-helper
-ceTaskId=AWO32pTYoonj-fbcClSX
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AWO32pTYoonj-fbcClSX
+ceTaskId=AWO4F8HNru6r5O5jQxWK
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWO4F8HNru6r5O5jQxWK

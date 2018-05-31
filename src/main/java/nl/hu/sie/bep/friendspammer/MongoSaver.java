@@ -16,15 +16,14 @@ public class MongoSaver {
 	private static Logger logger = Logger.getLogger(EmailSender.class.getName());
 
 	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html, String userName, String password) {
-		String database = "friendspammer";
 
-		MongoCredential credential = MongoCredential.createCredential(userName, database, password.toCharArray());
+		MongoConnection mongoConnection = new MongoConnection(userName, password);
 
 		boolean success = true;
 
-		try (MongoClient mongoClient = new MongoClient(new ServerAddress("YOUR HOST", 27939), credential, MongoClientOptions.builder().build()) ) {
+		try (MongoClient mongoClient = new MongoClient(new ServerAddress("YOUR HOST", 27939), mongoConnection.credential, MongoClientOptions.builder().build()) ) {
 
-			MongoDatabase db = mongoClient.getDatabase( database );
+			MongoDatabase db = mongoClient.getDatabase( mongoConnection.database );
 
 			MongoCollection<Document> c = db.getCollection("email");
 

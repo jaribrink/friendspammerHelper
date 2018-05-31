@@ -1,4 +1,5 @@
 nl\hu\sie\bep\friendspammer\EmailSender.class
+nl\hu\sie\bep\friendspammer\MongoConnection.class
 nl\hu\sie\bep\friendspammer\EmailSender$1.class
 nl\hu\sie\bep\friendspammer\MongoSaver.class
 nl\hu\sie\bep\friendspammer\EmailSender$2.class
