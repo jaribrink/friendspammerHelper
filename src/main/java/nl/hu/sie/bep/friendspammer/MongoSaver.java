@@ -1,16 +1,11 @@
 package nl.hu.sie.bep.friendspammer;
 
-import java.net.UnknownHostException;
-import java.util.Arrays;
+import java.util.logging.Logger;
 
 import org.bson.Document;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
-import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.MongoException;
 import com.mongodb.ServerAddress;
@@ -18,10 +13,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoSaver {
+	private static Logger logger = Logger.getLogger(EmailSender.class.getName());
 
-	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html) {
-		String userName = "JariBrink";
-		String password = "wachtwoord";
+	public static boolean saveEmail(String to, String from, String subject, String text, Boolean html, String userName, String password) {
 		String database = "friendspammer";
 
 		MongoCredential credential = MongoCredential.createCredential(userName, database, password.toCharArray());
@@ -41,8 +35,8 @@ public class MongoSaver {
 					.append("asHtml", html);
 			c.insertOne(doc);
 		} catch (MongoException mongoException) {
-			System.out.println("XXXXXXXXXXXXXXXXXX ERROR WHILE SAVING TO MONGO XXXXXXXXXXXXXXXXXXXXXXXXXX");
-			mongoException.printStackTrace();
+			logger.config("XXXXXXXXXXXXXXXXXX ERROR WHILE SAVING TO MONGO XXXXXXXXXXXXXXXXXXXXXXXXXX");
+			logger.config(mongoException.toString());
 			success = false;
 		}
 
@@ -50,8 +44,7 @@ public class MongoSaver {
 
 	}
 
-	public static void main(String ...args) throws UnknownHostException {
-
-		System.out.println("test");
+	public static void main(String ...args) {
+		logger.config("test");
 	}
 }
